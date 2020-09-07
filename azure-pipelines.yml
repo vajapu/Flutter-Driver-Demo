@@ -13,7 +13,9 @@ steps:
 #- script: instruments -s devices
 #  displayName: List Devices
  - script: xcrun simctl boot 111860BC-0061-48FB-B8DF-BF75AD007856
+   displayName: Start Simulator 
  - script: chmod a+x pipelines/scripts.sh
+   displayName: Give run permission
  - script: pipelines/scripts.sh install_flutter
    displayName: Install Flutter
  - script: pipelines/scripts.sh flutter_test
