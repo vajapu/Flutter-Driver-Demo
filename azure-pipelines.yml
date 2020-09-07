@@ -20,6 +20,8 @@ steps:
    displayName: Install Flutter
  - script: pipelines/scripts.sh flutter_test
    displayName: Test Flutter
+ - publish: $(System.DefaultWorkingDirectory)/test_driver/reports
+   artifact: reports
  - script: xcrun simctl shutdown all & xcrun simctl erase all
    condition: always()
 
