@@ -1,0 +1,24 @@
+# Xcode
+# Build, test, and archive an Xcode workspace on macOS.
+# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
+
+trigger:
+ - mashter
+
+pool:
+  vmImage: 'macos-latest'
+
+steps:
+#- script: instruments -s devices
+#  displayName: List Devices
+ - script: xcrun simctl boot 111860BC-0061-48FB-B8DF-BF75AD007856
+ - script: chmod a+x pipelines/scripts.sh
+ - script: pipelines/scripts.sh install_flutter
+   displayName: Install Flutter
+ - script: pipelines/scripts.sh flutter_test
+   displayName: Test Flutter
+ - script: xcrun simctl shutdown all & xcrun simctl erase all
+   condition: always()
+
+
