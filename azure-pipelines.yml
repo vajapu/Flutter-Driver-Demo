@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
 
 trigger:
- - mashter
+ - master
 
 pool:
   vmImage: 'macos-latest'
@@ -22,7 +22,7 @@ steps:
    displayName: Test Flutter
  - publish: $(System.DefaultWorkingDirectory)/test_driver/reports
    artifact: reports
- - script: set +e & xcrun simctl shutdown all & xcrun simctl erase all & set -e
+ - script: xcrun simctl shutdown all & xcrun simctl erase all & set -e
    condition: always()
 
 
