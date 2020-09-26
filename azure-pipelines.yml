@@ -16,7 +16,7 @@ jobs:
     - task: FlutterBuild@0
       inputs:
         target: apk
-        projectDirectory: $(projectDirectory)
+        projectDirectory: $(projectDirectory)/artifacts/android
   
     - task: AndroidSigning@3
       displayName: 'Signing and aligning APK file(s) **/*.apk'
@@ -30,7 +30,7 @@ jobs:
     - task: CopyFiles@2
       inputs:
         contents: '**/*.apk'
-        targetFolder: '$(build.artifactStagingDirectory)'
+        targetFolder: '$(build.artifactStagingDirectory)/android'
     - task: PublishBuildArtifacts@1
       inputs:
         artifactName: 'drop'
