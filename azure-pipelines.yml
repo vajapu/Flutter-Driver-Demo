@@ -1,7 +1,8 @@
 # Flutter build
 variables:
   - group: 'keystore secrets'
-  projectDirectory: ''
+  - name : 'projectDirectory'
+    value: ''
 trigger:
 - none
 jobs:
