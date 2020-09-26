@@ -1,28 +1,36 @@
-# Xcode
-# Build, test, and archive an Xcode workspace on macOS.
-# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
-
+# Flutter build
+variables:
+  projectDirectory: ''
 trigger:
- - master
-
-pool:
-  vmImage: 'macos-latest'
-
-steps:
-#- script: instruments -s devices
-#  displayName: List Devices
- - script: xcrun simctl boot 111860BC-0061-48FB-B8DF-BF75AD007856
-   displayName: Start Simulator 
- - script: chmod a+x pipelines/scripts.sh
-   displayName: Give run permission
- - script: pipelines/scripts.sh install_flutter
-   displayName: Install Flutter
- - script: pipelines/scripts.sh flutter_test
-   displayName: Test Flutter
- - publish: $(System.DefaultWorkingDirectory)/test_driver/reports
-   artifact: reports
- - script: xcrun simctl shutdown all & xcrun simctl erase all & set -e
-   condition: always()
-
-
+- none
+jobs:
+  - job: Android
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+    - task: FlutterInstall@0
+      inputs:
+        channel: 'stable'
+        version: 'latest'
+    
+    - task: FlutterBuild@0
+      inputs:
+        target: apk
+        projectDirectory: $(projectDirectory)
+  
+    - task: AndroidSigning@3
+      displayName: 'Signing and aligning APK file(s) **/*.apk'
+      inputs:
+        apkFiles: '**/*.apk'
+        apksign: true
+        apksignerKeystoreFile: key.jks
+        apksignerKeystorePassword: $(keypassword)
+        apksignerKeystoreAlias: $(key)
+        apksignerKeyPassword: $(keypassword)
+    - task: CopyFiles@2
+      inputs:
+        contents: '**/*.apk'
+        targetFolder: '$(build.artifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        artifactName: 'drop'
