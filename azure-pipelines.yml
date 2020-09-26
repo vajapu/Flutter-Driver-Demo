@@ -21,7 +21,7 @@ jobs:
         projectDirectory: $(projectDirectory)
         
     - task: DownloadSEcureFile@1
-      name: 'Download keystore for app sign'
+      name: 'Download_keystore_for_app_sign'
       inputs:
         secureFile: 'key.jks'
   
