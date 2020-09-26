@@ -1,5 +1,7 @@
 # Flutter build
 variables:
+variables:
+  - group: 'keystore secrets'
   projectDirectory: ''
 trigger:
 - none
@@ -16,14 +18,19 @@ jobs:
     - task: FlutterBuild@0
       inputs:
         target: apk
-        projectDirectory: $(projectDirectory)/artifacts/android
+        projectDirectory: $(projectDirectory)
+        
+    - task: DownloadSEcureFile@1
+      name: 'Download keystore for app sign'
+      inputs:
+        secureFile: 'key.jks'
   
     - task: AndroidSigning@3
       displayName: 'Signing and aligning APK file(s) **/*.apk'
       inputs:
         apkFiles: '**/*.apk'
         apksign: true
-        apksignerKeystoreFile: key.jks
+        apksignerKeystoreFile: $(Agent.TempDirectory)/key.jks
         apksignerKeystorePassword: $(keypassword)
         apksignerKeystoreAlias: $(key)
         apksignerKeyPassword: $(keypassword)
