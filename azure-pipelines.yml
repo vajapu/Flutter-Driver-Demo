@@ -21,16 +21,16 @@ jobs:
         projectDirectory: $(projectDirectory)
         
     - task: DownloadSEcureFile@1
-      name: 'Download_keystore_for_app_sign'
+      name: keyStore
+      displayName: 'Download keystore for app sign'
       inputs:
-        secureFile: 'key.jks'
-  
+        secureFile: 'key.jks'  
     - task: AndroidSigning@3
       displayName: 'Signing and aligning APK file(s) **/*.apk'
       inputs:
         apkFiles: '**/*.apk'
         apksign: true
-        apksignerKeystoreFile: $(Agent.TempDirectory)/key.jks
+        apksignerKeystoreFile: $(keyStore.secureFilePath)
         apksignerKeystorePassword: $(keypassword)
         apksignerKeystoreAlias: $(key)
         apksignerKeyPassword: $(keypassword)
