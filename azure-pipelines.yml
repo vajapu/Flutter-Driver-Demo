@@ -20,12 +20,31 @@ jobs:
       inputs:
         target: apk
         projectDirectory: $(projectDirectory)
+
+    - task: Bash@3
+      inputs:
+        filePath: '/pipelines/scripts.sh'
+        arguments: 'start_android_emulator'
         
+    - task: FlutterCommand@0
+      displayName: 'Run tests'
+      inputs:
+        arguments: 'drive --target=test_driver/app.dart'
+
+    - publish: $(System.DefaultWorkingDirectory)/test_driver/reports
+      displayName: 'Saving reports'
+      artifact: reports
+    
+    - task: DownloadSEcureFile@1
+      name: keyStore
+      displayName: 'Download keystore for app sign'
+      inputs:
+        secureFile: key.jks
     - task: AndroidSigning@3
       displayName: 'Signing and aligning APK file(s) **/*.apk'
       inputs:
         apkFiles: '**/*.apk'
-        apksignerKeystoreFile: 'key.jks'
+        apksignerKeystoreFile: $(keyStore.secureFilePath)
         apksign: true
         apksignerKeystorePassword: $(keypassword)
         apksignerKeystoreAlias: $(key)
