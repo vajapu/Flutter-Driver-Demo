@@ -1,6 +1,5 @@
 # Flutter build
 variables:
-variables:
   - group: 'keystore secrets'
   projectDirectory: ''
 trigger:
