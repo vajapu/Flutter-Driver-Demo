@@ -21,10 +21,9 @@ jobs:
     #     target: apk
     #     projectDirectory: $(projectDirectory)
 
-    - task: Bash@3
-      inputs:
-        filePath: 'pipelines/scripts.sh'
-        arguments: 'start_android_emulator'
+    - script: chmod a+x pipelines/scripts.sh
+    - script: pipelines/scripts.sh start_android_emulator
+      displayName: 'Start android emulator'
 
     - task: FlutterCommand@0
       displayName: 'Run tests'
