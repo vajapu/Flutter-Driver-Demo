@@ -1,4 +1,5 @@
 # Flutter build
+name: $(Date:yyyyMMdd)$(Rev:r)
 variables:
   - group: 'keystore secrets'
   - name : 'projectDirectory'
