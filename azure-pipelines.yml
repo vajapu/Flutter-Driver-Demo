@@ -39,7 +39,9 @@ jobs:
       name: keyStore
       displayName: 'Download keystore for app sign'
       inputs:
-        secureFile: key.jks
+        secureFile: 'key.jks'
+        retryCount: '3'
+    
     - task: AndroidSigning@3
       displayName: 'Signing and aligning APK file(s) **/*.apk'
       inputs:
