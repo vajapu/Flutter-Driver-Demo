@@ -34,19 +34,12 @@ jobs:
     - publish: $(System.DefaultWorkingDirectory)/test_driver/reports
       displayName: 'Saving reports'
       artifact: reports
-    
-    - task: DownloadSEcureFile@1
-      name: keyStore
-      displayName: 'Download keystore for app sign'
-      inputs:
-        secureFile: 'key.jks'
-        retryCount: '3'
-    
+      
     - task: AndroidSigning@3
       displayName: 'Signing and aligning APK file(s) **/*.apk'
       inputs:
         apkFiles: '**/*.apk'
-        apksignerKeystoreFile: $(keyStore.secureFilePath)
+        apksignerKeystoreFile: 'key.jks'
         apksign: true
         apksignerKeystorePassword: $(keypassword)
         apksignerKeystoreAlias: $(key)
