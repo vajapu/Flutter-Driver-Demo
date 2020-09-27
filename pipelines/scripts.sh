@@ -32,4 +32,9 @@ start_android_emulator(){
   echo "Emulator started"
 }
 
+generate_test_report() {
+  npm install multiple-cucumber-html-reporter
+  node pipelines/reporter.js
+}
+
 "$@"
