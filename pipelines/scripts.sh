@@ -34,7 +34,7 @@ start_android_emulator(){
 
 generate_test_report() {
   npm install multiple-cucumber-html-reporter
-  node pipelines/reporter.js
+  node reporter.js
 }
 
 "$@"
