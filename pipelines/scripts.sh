@@ -35,6 +35,7 @@ start_android_emulator(){
 generate_test_report() {
   npm install multiple-cucumber-html-reporter
   node pipelines/reporter.js
+  find "reports" -type f -name "*.html" -print0 | xargs -0 sed -i '' "s/<div.*created-by((.|\n)*)<\/div>//g"
 }
 
 "$@"
