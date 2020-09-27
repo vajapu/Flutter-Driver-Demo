@@ -4,7 +4,7 @@ var jsonPath = path.join(__dirname, '..', 'test_driver', 'reports');
  
 report.generate({
     jsonDir: jsonPath,
-    reportPath: '../test_driver/reports/',
+    reportPath: jsonPath,
     metadata:{
         device: 'emulator',
         platform: {
