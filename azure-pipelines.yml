@@ -11,24 +11,24 @@ jobs:
     pool:
       vmImage: 'macOS-latest'
     steps:
-    - task: FlutterInstall@0
-      inputs:
-        channel: 'stable'
-        version: 'latest'
+    # - task: FlutterInstall@0
+    #   inputs:
+    #     channel: 'stable'
+    #     version: 'latest'
     
-    - task: FlutterBuild@0
-      inputs:
-        target: apk
-        projectDirectory: $(projectDirectory)
+    # - task: FlutterBuild@0
+    #   inputs:
+    #     target: apk
+    #     projectDirectory: $(projectDirectory)
 
     - script: chmod a+x pipelines/scripts.sh
-    - script: pipelines/scripts.sh start_android_emulator
-      displayName: 'Start android emulator'
+    # - script: pipelines/scripts.sh start_android_emulator
+    #   displayName: 'Start android emulator'
 
-    - task: FlutterCommand@0
-      displayName: 'Run tests'
-      inputs:
-        arguments: 'drive --target=test_driver/app.dart'
+    # - task: FlutterCommand@0
+    #   displayName: 'Run tests'
+    #   inputs:
+    #     arguments: 'drive --target=test_driver/app.dart'
     - script: pipelines/scripts.sh generate_test_report
       displayName: 'Generate report'
 
@@ -36,19 +36,19 @@ jobs:
       displayName: 'Saving reports'
       artifact: reports
       
-    - task: AndroidSigning@3
-      displayName: 'Signing and aligning APK file(s) **/*.apk'
-      inputs:
-        apkFiles: '**/*.apk'
-        apksignerKeystoreFile: 'key.jks'
-        apksign: true
-        apksignerKeystorePassword: $(keypassword)
-        apksignerKeystoreAlias: $(key)
-        apksignerKeyPassword: $(keypassword)
-    - task: CopyFiles@2
-      inputs:
-        contents: '**/*.apk'
-        targetFolder: '$(build.artifactStagingDirectory)/android'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        artifactName: 'drop'
+    # - task: AndroidSigning@3
+    #   displayName: 'Signing and aligning APK file(s) **/*.apk'
+    #   inputs:
+    #     apkFiles: '**/*.apk'
+    #     apksignerKeystoreFile: 'key.jks'
+    #     apksign: true
+    #     apksignerKeystorePassword: $(keypassword)
+    #     apksignerKeystoreAlias: $(key)
+    #     apksignerKeyPassword: $(keypassword)
+    # - task: CopyFiles@2
+    #   inputs:
+    #     contents: '**/*.apk'
+    #     targetFolder: '$(build.artifactStagingDirectory)/android'
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     artifactName: 'drop'
