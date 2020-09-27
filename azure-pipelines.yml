@@ -29,6 +29,8 @@ jobs:
       displayName: 'Run tests'
       inputs:
         arguments: 'drive --target=test_driver/app.dart'
+    - script: pipelines/scripts.sh generate_test_report
+      displayName: 'Generate report'
 
     - publish: $(System.DefaultWorkingDirectory)/test_driver/reports
       displayName: 'Saving reports'
