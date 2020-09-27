@@ -1,7 +1,9 @@
 const report = require('multiple-cucumber-html-reporter');
+var path = require('path');
+var jsonPath = path.join(__dirname, '..', 'test_driver', 'reports');
  
 report.generate({
-    jsonDir: '../test_driver/reports/',
+    jsonDir: jsonPath,
     reportPath: '../test_driver/reports/',
     metadata:{
         device: 'emulator',
